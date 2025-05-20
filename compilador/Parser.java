@@ -27,26 +27,26 @@ public class Parser {
     }
 
     void expr() {
-        number(); // Processa o primeiro número
+        number();
         while (currentToken.type == TokenType.PLUS || currentToken.type == TokenType.MINUS) {
-            oper(); // Processa operador seguido de número
+            oper();
         }
     }
 
     void number() {
-        System.out.println("<" + currentToken.type.name() + ">" + currentToken.lexeme + "</" + currentToken.type.name() + ">");
+        System.out.println("push " + currentToken.lexeme);
         match(TokenType.NUMBER);
     }
 
     void oper() {
-        if (currentToken.type == TokenType.PLUS) {
-            System.out.println("<PLUS>+</PLUS>");
-            match(TokenType.PLUS);
-            number();
-        } else if (currentToken.type == TokenType.MINUS) {
-            System.out.println("<MINUS>-</MINUS>");
-            match(TokenType.MINUS);
-            number();
+        TokenType op = currentToken.type;
+        match(op);
+        number();
+
+        if (op == TokenType.PLUS) {
+            System.out.println("add");
+        } else if (op == TokenType.MINUS) {
+            System.out.println("sub");
         }
     }
 }
