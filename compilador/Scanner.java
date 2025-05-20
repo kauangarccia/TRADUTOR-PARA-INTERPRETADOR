@@ -1,7 +1,5 @@
 package compilador;
 
-import compilador.Token;
-import compilador.TokenType;
 import java.util.Arrays;
 
 public class Scanner {
@@ -34,6 +32,10 @@ public class Scanner {
             return number();
         }
 
+        if (Character.isLetter(ch)) {
+            return identifier();
+        }
+
         switch (ch) {
             case '+':
                 advance();
@@ -56,6 +58,16 @@ public class Scanner {
 
         String n = new String(Arrays.copyOfRange(input, start, current));
         return new Token(TokenType.NUMBER, n);
+    }
+
+    private Token identifier() {
+        int start = current;
+        while (Character.isLetter(peek())) {
+            advance();
+        }
+
+        String id = new String(Arrays.copyOfRange(input, start, current));
+        return new Token(TokenType.IDENTIFIER, id);
     }
 
     private void skipWhitespace() {

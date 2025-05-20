@@ -16,6 +16,9 @@ public class Parser {
 
     public void parse() {
         expr();
+        if (currentToken.type == TokenType.IDENTIFIER) {
+            pop();
+        }
     }
 
     private void match(TokenType t) {
@@ -48,5 +51,10 @@ public class Parser {
         } else if (op == TokenType.MINUS) {
             System.out.println("sub");
         }
+    }
+
+    void pop() {
+        System.out.println("pop " + currentToken.lexeme);
+        match(TokenType.IDENTIFIER);
     }
 }
